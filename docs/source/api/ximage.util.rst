@@ -1,7 +1,7 @@
-:mod:`hspeed.util`
+:mod:`ximage.util`
 ==================
 
-.. automodule:: hspeed.util
+.. automodule:: ximage.util
    :members:
    :show-inheritance:
    :undoc-members:

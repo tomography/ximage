@@ -1,7 +1,7 @@
-:mod:`hspeed.widget`
+:mod:`ximage.widget`
 ====================
 
-.. automodule:: hspeed.widget
+.. automodule:: ximage.widget
    :members:
    :show-inheritance:
    :undoc-members:
