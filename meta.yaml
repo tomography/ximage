@@ -1,0 +1,29 @@
+package:
+  name: ximage
+  version: '0.0.1'
+
+source:
+  git_url: https://github.com/tomography/ximage.git
+  
+build:
+  number: 0
+
+requirements:
+  build:
+    - python
+    - setuptools
+ 
+  run:
+    - python
+    - numpy    
+    
+test:
+  # Python imports
+  imports:
+    - ximage
+    - ximage.util
+
+about:
+  home: http://ximage.readthedocs.org
+  license: BSD-3
+  summary: 'X-ray image processing toolbox'

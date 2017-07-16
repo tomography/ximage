@@ -1,0 +1,1 @@
+Examples========Here we describe what the examples are doing. You can cite with :cite:`reference:01`... toctree::   demo/docs.demo.example_01   demo/docs.demo.example_02.. automodule:: ximage   :members:   :undoc-members:   :show-inheritance: 
