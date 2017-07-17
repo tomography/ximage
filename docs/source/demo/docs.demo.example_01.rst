@@ -1,4 +1,4 @@
-32-ID AM-2
+32-ID AM-1
 ==========
 
 This section contains a example using the additive manufacting (AM) high speed images from 32-ID.
