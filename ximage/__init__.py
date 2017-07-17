@@ -48,11 +48,11 @@
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-from hspeed.util import *
-from hspeed.widget import *
+from ximage.util import *
+from ximage.widget import *
 
 try:
     import pkg_resources
-    __version__ = pkg_resources.working_set.require("hspeed")[0].version
+    __version__ = pkg_resources.working_set.require("ximage")[0].version
 except:
     pass
