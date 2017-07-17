@@ -1,7 +1,7 @@
-Example 02 
+32-ID AM-2
 ==========
 
-This section contains the example_02 script.
+This section contains a example using the additive manufacting (AM) high speed images from 32-ID.
 
 Download file: :download:`example_02.py
 <../../../docs/demo/example_02.py>`
