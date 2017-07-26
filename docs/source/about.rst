@@ -2,9 +2,8 @@
 About
 =====
 
-This section describes what the
-`HSpeed <https://github.com/tomography/ximage>`_
-project is about.
+ The `X-Image <https://github.com/tomography/ximage>`_ 
+ is a collebrative space for gathering tools and tutorials for segmenting data for X-Ray sciences. 
 
 .. contents:: Contents:
    :local:

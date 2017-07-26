@@ -3,7 +3,7 @@ Install
 =======
 
 This section covers the basics of how to download and install 
-`Hspeed <https://github.com/tomography/ximage>`_. We recommend you 
+`X-Image <https://github.com/tomography/ximage>`_. We recommend you 
 to install the `Anaconda Python <http://continuum.io/downloads>`_
 distribution.
 

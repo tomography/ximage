@@ -1,59 +1,36 @@
 ===========
-Module Name
+X-Ray Image Segmentation Tools & Tutorials
 ===========
 
+.. .. image:: source/img/ximage-logo.png
+..    :width: 320px
+..    :alt: ximage
 
-.. image:: source/img/ximage-logo.png
-   :width: 320px
-   :alt: ximage
+The X-image is a collection of tools and tutorials for segmenting X-ray and RGB images using
+image processing and compute vision techniques. 
 
+Few examples
+-------------
 
-This `GitHub repository <https://github.com/tomography/ximage>`_ 
-provides a template to add `sphinx <http://www.sphinx-doc.org>`_ 
-/ `Read The Docs <http://read-the-docs.readthedocs.io>`_
-documentation to any python project to generate this
-`Module Docs <https://ximage.readthedocs.io>`_. 
+Detecting location and size of cells in X-ray images:
 
-These pages are written using `reStructuredText <http://www.sphinx-doc.org/en/stable/rest.html>`_
-that allows *emphasis*, **strong**, ``literal`` and many more styles.
+.. image:: source/img/cell_segmentation.png
 
-You can add a reference :cite:`cite:01`, include equations like:
+Detecting droplets using RGB camera images:
 
-.. math::  V(x) = \left(\frac{1-\eta}{\sigma\sqrt{2\pi}}\right) \cdot exp\left({\frac{x^2}{2\sigma^2}}\right) + \eta \cdot \frac{\sigma}{2\pi} \cdot \frac{1}{x^2 + \left(\frac{\sigma}{2}\right)^2}
-
-or 
-
-.. math::  I_{white} = \int_{E_{1}}^{E_{2}} I(\theta,E) \cdot F(E)\,dE.
-
-and tables:
+.. image:: source/img/droplet_segmentation.png
 
 
-+---------------+----------------+-----------------------------+
-|    Member     |      Type      |        Example              |
-+===============+================+=============================+
-|     first     |    ordinal     |           1st               |
-+---------------+----------------+-----------------------------+
-|     second    |    ordinal     |           2nd               | 
-+---------------+----------------+-----------------------------+
-|     third     |    ordinal     |           3rd               |
-+---------------+----------------+-----------------------------+
+How to Contribute
+-----------------
 
-Features
---------
-
-* List here 
-* the module features
-
-
-Contribute
-----------
+If you are working on a segmentation tool and would like to contribute
 
 * Documentation: https://github.com/tomography/ximage/tree/master/doc
 * Issue Tracker: https://github.com/tomography/ximage/docs/issues
 * Source Code: https://github.com/tomography/ximage/ximage
 
-Content
--------
+
 
 .. toctree::
    :maxdepth: 1
