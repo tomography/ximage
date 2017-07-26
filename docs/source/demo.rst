@@ -1,1 +1,1 @@
-Examples========Here we describe what the examples are doing. You can cite with :cite:`reference:01`... toctree::   demo/docs.demo.example_01   demo/docs.demo.example_02   ipynb/sector1.rst.. automodule:: ximage   :members:   :undoc-members:   :show-inheritance: 
+Examples========.. toctree::   demo/docs.demo.example_01   demo/docs.demo.example_02   ipynb/sector1.rst   ipynb/Droplet_fitEllipse_1.rst.. automodule:: ximage   :members:   :undoc-members:   :show-inheritance: 
