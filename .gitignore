@@ -54,6 +54,7 @@ doc/_build
 *egg-info
 *.egg
 .settings
+.ipynb_checkpoints
 
 # LaTex generated files #
 #########################
