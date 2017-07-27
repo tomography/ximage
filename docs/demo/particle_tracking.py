@@ -6,7 +6,7 @@ Example script
 """
 
 from __future__ import print_function
-import hspeed
+import ximage
 import os
 import sys
 import argparse
@@ -24,20 +24,22 @@ def main(arg):
     index_start = int(args.start)
 
     # Read the raw data
-    rdata = hspeed.load_raw(top, index_start)
+    rdata = ximage.load_raw(top, index_start)
+    
+    ximage.slider(rdata)
 
-    particle_bed_reference = hspeed.particle_bed_location(rdata[0], plot=False)
+    particle_bed_reference = ximage.particle_bed_location(rdata[0], plot=False)
     print("Particle bed location: ", particle_bed_reference)
     
     # Cut the images to remove the particle bed
     cdata = rdata[:, 0:particle_bed_reference, :]
 
     # Find the image when the shutter starts to close
-    dark_index = hspeed.shutter_off(rdata)
+    dark_index = ximage.shutter_off(rdata)
     print("Shutter CLOSED on image: ", dark_index)
 
     # Find the images when the laser is on
-    laser_on_index = hspeed.laser_on(rdata, particle_bed_reference, alpha=0.8)
+    laser_on_index = ximage.laser_on(rdata, particle_bed_reference, alpha=0.8)
     print("Laser ON on image: ", laser_on_index)
 
 if __name__ == "__main__":

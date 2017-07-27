@@ -14,13 +14,13 @@ distribution.
 Installing from source
 ======================
   
-Clone `Hispeed <https://github.com/tomography/ximage>`_  
+Clone `ximage <https://github.com/tomography/ximage>`_  
 from `GitHub <https://github.com>`_ repository::
 
-    git clone https://github.com/tomography/ximage.git hspeed
+    git clone https://github.com/tomography/ximage.git ximage
 
 then::
 
-    cd hspeed
+    cd ximage
     python setup.py install
     
