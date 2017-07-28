@@ -2,7 +2,7 @@
 Droplet Detection
 =================
 
-You can download this eaxample as :download:`jupyter notebook<../../../docs/demo/Droplet_fitEllipse_1.ipynb>`
+You can download this example as :download:`jupyter notebook<../../../docs/demo/Droplet_fitEllipse_1.ipynb>`
 
 .. code:: python
 
