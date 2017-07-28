@@ -47,7 +47,7 @@
 # #########################################################################
 
 """
-Module for describing .....
+Utility module for ximage
 """
 
 from __future__ import (absolute_import, division, print_function,
@@ -56,18 +56,12 @@ import os
 import fnmatch
 import dxchange
 import numpy as np
-import matplotlib as mpl
-import matplotlib.pylab as pl
-import matplotlib.widgets as wdg
-import matplotlib.pyplot as plt
 
-import skimage as ski
-import skimage.segmentation as seg
-import skimage.morphology as morth
-import scipy.ndimage as ndi
 import scipy
+import scipy.ndimage as ndi
+import skimage as ski
 
-__authors__ = "First Name Last Name"
+__authors__ = "Francesco De Carlo"
 __copyright__ = "Copyright (c) 2017, Argonne National Laboratory"
 __version__ = "0.0.1"
 __all__ = ['load_raw',
@@ -80,23 +74,20 @@ __all__ = ['load_raw',
 
 def load_raw(top, index_start):
     """
-    Function description.
+    Load a stack of tiff images.
 
     Parameters
     ----------
-    parameter_01 : type
-        Description.
+    top : str
+        Top data directory.
 
-    parameter_02 : type
-        Description.
-
-    parameter_03 : type
-        Description.
+    index_start : int
+        Image index start.
 
     Returns
     -------
-    return_01
-        Description.
+    ndarray
+        3D stack of images.
     """
     template = os.listdir(top)[1]
 
@@ -110,25 +101,22 @@ def load_raw(top, index_start):
     rdata = dxchange.read_tiff_stack(fname, ind=ind_tomo)
     return rdata
 
-def shutter_off(image, alpha=0.7, plot=False):
+def shutter_off(image, alpha=0.7):
     """
-    Function description.
+    Finds the first image with the shutter closed.
 
     Parameters
     ----------
-    parameter_01 : type
-        Description.
+    image : ndarray
+        3D stack of images.
 
-    parameter_02 : type
-        Description.
-
-    parameter_03 : type
-        Description.
+    alpha : float
+        Threshold level.
 
     Returns
     -------
-    return_01
-        Description.
+    int
+        Index of the first image with the shutter closed.
     """
 
     flat_sum = np.sum(image[0, :, :])
@@ -139,33 +127,24 @@ def shutter_off(image, alpha=0.7, plot=False):
             return index
     return None
 
-def particle_bed_location(image, plot=False):
+def particle_bed_location(image):
     """
-    Function description.
+    Finds the image row marking the location of the particle bed.
 
     Parameters
     ----------
-    parameter_01 : type
-        Description.
-
-    parameter_02 : type
-        Description.
-
-    parameter_03 : type
-        Description.
+    image : ndarray
+        2D image.
 
     Returns
     -------
-    return_01
-        Description.
+    int
+        Image row marking the location of the particle bed.
     """
 
     edge = np.sum(image, axis=1)
     x = np.arange(0, edge.shape[0], 1)
     y = ndi.gaussian_filter(edge/float(np.amax(edge)), 5)
-    if plot:
-        plt.plot(x, y)
-        plt.show()
     return np.abs(y - 0.5).argmin()
 
 def laser_on(rdata, particle_bed_ref, alpha=1.0):
@@ -174,34 +153,22 @@ def laser_on(rdata, particle_bed_ref, alpha=1.0):
 
     Parameters
     ----------
-    parameter_01 : type
-        Description.
+    rdata : ndarray
+        3D stack of images.
 
-    parameter_02 : type
-        Description.
+    particle_bed_ref : int
+        Image row marking the location of the particle bed.
 
-    parameter_03 : type
-        Description.
+    alpha : float
+        Threshold level.
 
     Returns
     -------
-    return_01
-        Description.
+    int
+        Index of the first image with the laser on.
     """
     nimages = rdata.shape[0]
     status = np.empty(nimages)
-    # for index in range(nimages):
-    #     ndata = rdata[index]
-    #     edge = np.sum(ndata, axis=1)
-    #     y = ndi.gaussian_filter(edge/float(np.amax(edge)), 5)
-    #     particle_bed = np.abs(y - 0.5).argmin()
-
-    #     if particle_bed <= particle_bed_ref :
-    #         status[index] = False
-    #     else:
-    #         status[index] = True
-    #         particle_bed_ref = particle_bed_ref * alpha
-    # return status
 
     for index in range(nimages):
         ndata = rdata[index]
@@ -215,23 +182,17 @@ def laser_on(rdata, particle_bed_ref, alpha=1.0):
 
 def scale_to_one(ndata):
     """
-    Function description.
+    Scale a stack of images between [0,1].
 
     Parameters
     ----------
-    parameter_01 : type
-        Description.
-
-    parameter_02 : type
-        Description.
-
-    parameter_03 : type
-        Description.
+    ndata : ndarray
+        3D stack of images.
 
     Returns
     -------
-    return_01
-        Description.
+    ndarray
+        3D stack of images.
     """
 
     ndata_max = np.amax(ndata)
@@ -246,23 +207,17 @@ def scale_to_one(ndata):
 
 def sobel_stack(ndata):
     """
-    Function description.
+    Applies sobel filter to a stack of images.
 
     Parameters
     ----------
-    parameter_01 : type
-        Description.
-
-    parameter_02 : type
-        Description.
-
-    parameter_03 : type
-        Description.
+    ndata : ndarray
+        3D stack of images.
 
     Returns
     -------
-    return_01
-        Description.
+    ndarray
+        3D stack of images.
     """
 
     nimages = ndata.shape[0]
@@ -270,32 +225,31 @@ def sobel_stack(ndata):
         ndata[index, :, :] = ski.filters.sobel(ndata[index, :, :])
     return ndata
 
-def label(ndata, blur_radius=1.0, threshold=1):
+def label(ndata, blur_radius=1.0, alpha=1):
     """
-    Function description.
+    Counts the number of particles in a stack of images.
 
     Parameters
     ----------
-    parameter_01 : type
-        Description.
+    ndata : ndarray
+        3D stack of images.
 
-    parameter_02 : type
-        Description.
+    blur_radius : float
+        Gaussian blur radius.
 
-    parameter_03 : type
-        Description.
+    alpha : float
+        Threshold level.
 
     Returns
     -------
-    return_01
-        Description.
+    ndata, nr_objects
+        3D stack of images, number of particles per image.
     """
 
 
     nimages = ndata.shape[0]
     for index in range(nimages):
         ndata[index, :, :] = ndi.gaussian_filter(ndata[index, :, :], blur_radius)
-        ndata[index, :, :], nr_objects = scipy.ndimage.label(ndata[index, :, :] > threshold) 
+        ndata[index, :, :], nr_objects = scipy.ndimage.label(ndata[index, :, :] > alpha) 
         print ("Image %d contains %d particles" % (index, nr_objects))
-        # print(np.amin(ndata[index, :, :]), np.amax(ndata[index, :, :]), np.mean(ndata[index, :, :]))
     return ndata, nr_objects

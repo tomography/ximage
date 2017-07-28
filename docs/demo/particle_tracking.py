@@ -41,7 +41,7 @@ def main(arg):
     # Read the raw data
     rdata = ximage.load_raw(top, index_start)
 
-    particle_bed_reference = ximage.particle_bed_location(rdata[0], plot=False)
+    particle_bed_reference = ximage.particle_bed_location(rdata[0])
     print("Particle bed location: ", particle_bed_reference)
     
     # Cut the images to remove the particle bed

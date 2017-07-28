@@ -50,7 +50,7 @@ or as :download:`python script<../../../docs/demo/particle_tracking.py>`
 
 .. code:: python
 
-    particle_bed_reference = ximage.particle_bed_location(rdata[0], plot=False)
+    particle_bed_reference = ximage.particle_bed_location(rdata[0])
 
 .. code:: python
 
