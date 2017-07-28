@@ -3,11 +3,9 @@ Particle Tracking
 
 This is an example of particle tracking in additive manufacturing high speed x-ray imaging.
 
-
 .. code:: ipython
 
     import ximage
-
 
 .. code:: ipython
 
@@ -19,9 +17,7 @@ This is an example of particle tracking in additive manufacturing high speed x-r
     rdata = ximage.load_raw(top, index_start)
     ximage.slider(rdata)
 
-
 .. image:: particle_tracking_files/particle_tracking_4_1.png
-
 
 .. code:: ipython
 
@@ -29,17 +25,13 @@ This is an example of particle tracking in additive manufacturing high speed x-r
     print("Particle bed location: ", particle_bed_reference)
     ('Particle bed location: ', 253)
 
-
 .. code:: ipython
 
     # Cut the images to remove the particle bed
     cdata = rdata[:, 0:particle_bed_reference, :]
     ximage.slider(cdata)
 
-
-
 .. image:: particle_tracking_files/particle_tracking_8_0.png
-
 
 .. code:: ipython
 
