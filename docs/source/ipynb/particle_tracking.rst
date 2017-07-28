@@ -3,6 +3,11 @@ Particle Tracking
 
 This is an example of particle tracking in additive manufacturing high speed x-ray imaging.
 
+.. code:: python
+
+    import matplotlib.pyplot as plt
+    %matplotlib inline
+
 .. code:: ipython
 
     import ximage
