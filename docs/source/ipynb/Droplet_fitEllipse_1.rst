@@ -2,6 +2,8 @@
 Droplet Detection
 =================
 
+You can download this eaxample as :download:`jupyter notebook<../../../docs/demo/Droplet_fitEllipse_1.ipynb>`
+
 .. code:: python
 
     import numpy as np
