@@ -6,7 +6,7 @@ The goal is to detect the circles contained in a tomographic reconstructed slice
 First step is the tomographic reconstruction followed by sharpening, defect detection and
 finally circle detection. 
 
-You can download the Jupyter notebook :download:`here<../../../docs/demo/circle_detection.ipynb>`
+You can download this eaxample as :download:`jupyter notebook<../../../docs/demo/circle_detection.ipynb>`
 
 .. code:: python
 
