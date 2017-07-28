@@ -3,7 +3,8 @@ Ximage
 ======
 
 
-`Ximage <https://github.com/tomography/ximage>`_ provides...
+`Ximage <https://github.com/tomography/ximage>`_ is a collection of tools and tutorials 
+for segmenting X-ray and RGB images using image processing and compute vision techniques. 
 
 Documentation
 -------------
