@@ -2,7 +2,9 @@
 Droplet Detection
 =================
 
-.. code:: ipython3
+You can download this example as :download:`jupyter notebook<../../../docs/demo/Droplet_fitEllipse_1.ipynb>`
+
+.. code:: python
 
     import numpy as np
     import matplotlib.pyplot as plt
@@ -24,7 +26,7 @@ Droplet Detection
 Detecting Background Pixels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code:: ipython3
+.. code:: python
 
     bg = cv2.imread('./samples/bg_nolbl.jpg', 0) 
     droplet = cv2.imread('./samples/full_droplet_1.jpg', 0)
@@ -53,7 +55,7 @@ Detecting Background Pixels
 Apply thresholds
 ~~~~~~~~~~~~~~~~
 
-.. code:: ipython3
+.. code:: python
 
     low_thresh = 100
     high_thresh = 250
@@ -76,7 +78,7 @@ Apply thresholds
 Finding Contours
 ~~~~~~~~~~~~~~~~
 
-.. code:: ipython3
+.. code:: python
 
     low_thresh = 70
     high_thresh = 255
@@ -101,7 +103,7 @@ Finding Contours
 Fitting an Ellipse
 ~~~~~~~~~~~~~~~~~~
 
-.. code:: ipython3
+.. code:: python
 
     final = np.dstack((droplet, droplet, droplet))
     

@@ -1,3 +1,12 @@
+Circle Detection
+================
+
+Here is an example of a tomographic data set of a sample consisting of spheres. 
+The goal is to detect the circles contained in a tomographic reconstructed slice. 
+First step is the tomographic reconstruction followed by sharpening, defect detection and
+finally circle detection. 
+
+You can download this eaxample as :download:`jupyter notebook<../../../docs/demo/circle_detection.ipynb>`
 
 .. code:: python
 
@@ -5,16 +14,8 @@
     %matplotlib inline
 
 
-.. parsed-literal::
-
-    /local/dgursoy/Apps/anaconda3/lib/python3.5/site-packages/matplotlib/font_manager.py:273: UserWarning: Matplotlib is building the font cache using fc-list. This may take a moment.
-      warnings.warn('Matplotlib is building the font cache using fc-list. This may take a moment.')
-    /local/dgursoy/Apps/anaconda3/lib/python3.5/site-packages/matplotlib/font_manager.py:273: UserWarning: Matplotlib is building the font cache using fc-list. This may take a moment.
-      warnings.warn('Matplotlib is building the font cache using fc-list. This may take a moment.')
-
-
 Image reconstruction
-====================
+--------------------
 
 .. code:: python
 
@@ -67,11 +68,11 @@ Image reconstruction
 
 
 
-.. image:: sector1_files/sector1_3_1.png
+.. image:: circle_detection_files/circle_detection_3_1.png
 
 
 Image sharpening
-================
+----------------
 
 .. code:: python
 
@@ -98,11 +99,11 @@ Image sharpening
 
 
 
-.. image:: sector1_files/sector1_5_1.png
+.. image:: circle_detection_files/circle_detection_5_1.png
 
 
 Artifact detection
-==================
+------------------
 
 .. code:: python
 
@@ -132,11 +133,11 @@ Artifact detection
 
 
 
-.. image:: sector1_files/sector1_7_1.png
+.. image:: circle_detection_files/circle_detection_7_1.png
 
 
 Circle detection
-================
+----------------
 
 .. code:: python
 
@@ -170,6 +171,6 @@ Circle detection
 
 
 
-.. image:: sector1_files/sector1_9_1.png
+.. image:: circle_detection_files/circle_detection_9_1.png
 
 

@@ -1,6 +1,6 @@
-===========
+==========================================
 X-Ray Image Segmentation Tools & Tutorials
-===========
+==========================================
 
 .. .. image:: source/img/ximage-logo.png
 ..    :width: 320px

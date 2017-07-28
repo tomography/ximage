@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Example script 
+Example script for additive manufacturing high speed imaging particle tracking
 """
 
 from __future__ import print_function
@@ -22,7 +22,7 @@ import trackpy as tp
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-import hspeed
+import ximage
 
 def main(arg):
 
@@ -39,20 +39,20 @@ def main(arg):
     nfile = len(fnmatch.filter(os.listdir(top), '*.tif'))
 
     # Read the raw data
-    rdata = hspeed.load_raw(top, index_start)
+    rdata = ximage.load_raw(top, index_start)
 
-    particle_bed_reference = hspeed.particle_bed_location(rdata[0], plot=False)
+    particle_bed_reference = ximage.particle_bed_location(rdata[0])
     print("Particle bed location: ", particle_bed_reference)
     
     # Cut the images to remove the particle bed
     cdata = rdata[:, 0:particle_bed_reference, :]
 
     # Find the image when the shutter starts to close
-    dark_index = hspeed.shutter_off(rdata)
+    dark_index = ximage.shutter_off(rdata)
     print("Shutter CLOSED on image: ", dark_index)
 
     # Find the images when the laser is on
-    laser_on_index = hspeed.laser_on(rdata, particle_bed_reference, alpha=1.00)
+    laser_on_index = ximage.laser_on(rdata, particle_bed_reference, alpha=1.00)
     print("Laser ON on image: ", laser_on_index)
 
     # Set the [start, end] index of the blocked images, flat and dark.
@@ -68,28 +68,28 @@ def main(arg):
     # if you want to use the shutter closed images as dark uncomment this:
     #dark = cdata[dark_range[0]:dark_range[1], :, :]  
 
-    # ndata = tomopy.normalize(proj, flat, dark)
-    # ndata = tomopy.normalize_bg(ndata, air=ndata.shape[2]/2.5)
-    # ndata = tomopy.minus_log(ndata)
-    # hspeed.slider(ndata)
-
-    # ndata = hspeed.scale_to_one(ndata)
-    # ndata = hspeed.sobel_stack(ndata)
-    # hspeed.slider(ndata)
-
     ndata = tomopy.normalize(proj, flat, dark)
     ndata = tomopy.normalize_bg(ndata, air=ndata.shape[2]/2.5)
     ndata = tomopy.minus_log(ndata)
+    ximage.slider(ndata[150:160:,:])
 
-    blur_radius = 3.0
-    threshold = .04
-    nddata = hspeed.label(ndata, blur_radius, threshold)
+    ndata = ximage.scale_to_one(ndata)
+    ndata = ximage.sobel_stack(ndata)
+    ximage.slider(ndata[150:160:,:])
 
-    f = tp.locate(ndata[100, :, :], 41, invert=True)
-    print(f.head)
-    plt.figure()  # make a new figure
-    tp.annotate(f, ndata[100, :, :]);
-#    hspeed.slider(ndata)
+#    ndata = tomopy.normalize(proj, flat, dark)
+#    ndata = tomopy.normalize_bg(ndata, air=ndata.shape[2]/2.5)
+#    ndata = tomopy.minus_log(ndata)
+
+#    blur_radius = 3.0
+#    threshold = .04
+#    nddata = ximage.label(ndata, blur_radius, threshold)
+
+#    f = tp.locate(ndata[100, :, :], 41, invert=True)
+#    print(f.head)
+#    plt.figure()  # make a new figure
+#    tp.annotate(f, ndata[100, :, :]);
+#    ximage.slider(nddata)
 
 
 if __name__ == "__main__":
