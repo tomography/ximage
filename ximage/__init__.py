@@ -49,6 +49,7 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 from ximage.util import *
+from ximage.align import *
 from ximage.widget import *
 
 try:
