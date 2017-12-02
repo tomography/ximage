@@ -16,7 +16,7 @@ if __name__ == '__main__':
                         default=15, type=int)
     args = parser.parse_args()
     # Perform the correction calculation
-    rot, trans = image_corrections(args.original_image, args.flipped_image,
+    rot, trans = ximage.image_corrections(args.original_image, args.flipped_image,
                                    passes=args.passes)
     # Display the result
     msg = "DR: {:.2f}deg, DX: {:.2f}px, DY: {:.2f}px"

@@ -1,57 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-# #########################################################################
-# Copyright (c) 2017, UChicago Argonne, LLC. All rights reserved.         #
-#                                                                         #
-# Copyright 2015. UChicago Argonne, LLC. This software was produced       #
-# under U.S. Government contract DE-AC02-06CH11357 for Argonne National   #
-# Laboratory (ANL), which is operated by UChicago Argonne, LLC for the    #
-# U.S. Department of Energy. The U.S. Government has rights to use,       #
-# reproduce, and distribute this software.  NEITHER THE GOVERNMENT NOR    #
-# UChicago Argonne, LLC MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR        #
-# ASSUMES ANY LIABILITY FOR THE USE OF THIS SOFTWARE.  If software is     #
-# modified to produce derivative works, such modified software should     #
-# be clearly marked, so as not to confuse it with the version available   #
-# from ANL.                                                               #
-#                                                                         #
-# Additionally, redistribution and use in source and binary forms, with   #
-# or without modification, are permitted provided that the following      #
-# conditions are met:                                                     #
-#                                                                         #
-#     * Redistributions of source code must retain the above copyright    #
-#       notice, this list of conditions and the following disclaimer.     #
-#                                                                         #
-#     * Redistributions in binary form must reproduce the above copyright #
-#       notice, this list of conditions and the following disclaimer in   #
-#       the documentation and/or other materials provided with the        #
-#       distribution.                                                     #
-#                                                                         #
-#     * Neither the name of UChicago Argonne, LLC, Argonne National       #
-#       Laboratory, ANL, the U.S. Government, nor the names of its        #
-#       contributors may be used to endorse or promote products derived   #
-#       from this software without specific prior written permission.     #
-#                                                                         #
-# THIS SOFTWARE IS PROVIDED BY UChicago Argonne, LLC AND CONTRIBUTORS     #
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT       #
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS       #
-# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL UChicago     #
-# Argonne, LLC OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,        #
-# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,    #
-# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;        #
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER        #
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT      #
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN       #
-# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE         #
-# POSSIBILITY OF SUCH DAMAGE.                                             #
-# #########################################################################
-
-"""
-alignment module for ximage
-"""
-
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+#!/bin/env python3
 import sys
 import os
 import argparse
@@ -63,6 +10,9 @@ from skimage.feature import register_translation
 from skimage.transform import AffineTransform, warp, FundamentalMatrixTransform
 import numpy as np
 
+#import dxchange
+import matplotlib.pyplot as plt
+
 __authors__ = "Mark Wolfman"
 __copyright__ = "Copyright (c) 2017, Argonne National Laboratory"
 __version__ = "0.0.1"
@@ -70,10 +20,23 @@ __all__ = ['alignment_pass',
            'transform_image',
            'image_corrections']
 
+def flip(m, axis):
+    if not hasattr(m, 'ndim'):
+        m = asarray(m)
+    indexer = [slice(None)] * m.ndim
+    try:
+        indexer[axis] = slice(None, None, -1)
+    except IndexError:
+        raise ValueError("axis=%i is invalid for the %i-dimensional input array"
+                         % (axis, m.ndim))
+    return m[tuple(indexer)]
+
 
 def alignment_pass(img, img_180):
     upsample = 200
     # Register the translation correction
+    print(img.shape)
+    print(img_180.shape)
     trans = register_translation(img, img_180, upsample_factor=upsample)
     trans = trans[0]
     # Register the rotation correction
@@ -120,7 +83,11 @@ def transform_image(img, rotation=0, translation=(0, 0)):
     M0 = _transformation_matrix(tx=-rot_center[0], ty=-rot_center[1])
     M1 = _transformation_matrix(r=np.radians(rotation), tx=xy_trans[0], ty=xy_trans[1])
     M2 = _transformation_matrix(tx=rot_center[0], ty=rot_center[1])
-    M = M2 @ M1 @ M0
+    # python 3.6
+    # M = M2 @ M1 @ M0
+    MT = np.dot(M1, M0)
+    M = np.dot(M2, MT)
+
     tr = FundamentalMatrixTransform(M)
     out = warp(img, tr)
     return out
@@ -128,8 +95,16 @@ def transform_image(img, rotation=0, translation=(0, 0)):
 
 def image_corrections(img_name_0, img_name_180, passes=15):
     img = imread(img_name_0)
+#    img = dxchange.read_tiff(img_name_0)
+    plt.imshow(img, interpolation='nearest', cmap='gray')
+    plt.show()
     img_180 = imread(img_name_180)
-    img = np.flip(img, 1)
+#    img_180 = dxchange.read_tiff(img_name_180)
+    plt.imshow(img_180, interpolation='nearest', cmap='gray')
+    plt.show()
+    # python 3.6
+    # img = np.flip(img, 1)
+    img = flip(img, 1)
     cume_angle = 0
     cume_trans = np.array([0, 0], dtype=float)
     for pass_ in range(passes):
@@ -193,3 +168,21 @@ def logpolar_fancy(image, i_0, j_0, p_n=None, t_n=None):
     transformed[pt] = image[ij]
     return transformed
 
+
+if __name__ == '__main__':
+    # Prepare arguments
+    parser = argparse.ArgumentParser(
+        description='Compare two images and get rotation/translation offsets.')
+    parser.add_argument('original_image', help='The original image file')
+    parser.add_argument('flipped_image',
+                        help='Image of the specimen after 180° stage rotation.')
+    parser.add_argument('--passes', '-p', help='How many iterations to run.',
+                        default=15, type=int)
+    args = parser.parse_args()
+    # Perform the correction calculation
+    rot, trans = image_corrections(args.original_image, args.flipped_image,
+                                   passes=args.passes)
+    # Display the result
+    msg = "ΔR: {:.2f}°, ΔX: {:.2f}px, ΔY: {:.2f}px"
+    msg = msg.format(rot, trans[0], trans[1])
+    print(msg)
