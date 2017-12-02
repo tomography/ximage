@@ -19,6 +19,6 @@ if __name__ == '__main__':
     rot, trans = ximage.image_corrections(args.original_image, args.flipped_image,
                                    passes=args.passes)
     # Display the result
-    msg = "DR: {:.2f}deg, DX: {:.2f}px, DY: {:.2f}px"
+    msg = "DR: {:.2f} deg, DX: {:.2f} px, DY: {:.2f} px"
     msg = msg.format(rot, trans[0], trans[1])
     print(msg)

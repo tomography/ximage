@@ -1,4 +1,6 @@
 #!/bin/env python3
+from __future__ import print_function
+
 import sys
 import os
 import argparse
@@ -12,6 +14,7 @@ import numpy as np
 
 #import dxchange
 import matplotlib.pyplot as plt
+
 
 __authors__ = "Mark Wolfman"
 __copyright__ = "Copyright (c) 2017, Argonne National Laboratory"
@@ -111,6 +114,7 @@ def image_corrections(img_name_0, img_name_180, passes=15):
         # Prepare the inter-translated images
         working_img = transform_image(img, translation=cume_trans, rotation=cume_angle)
         # Calculate a new transformation
+        print(pass_)
         angle, trans = alignment_pass(working_img, img_180)
         # Save the cumulative transformations
         cume_angle += angle
