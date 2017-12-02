@@ -35,8 +35,8 @@ def flip(m, axis):
 def alignment_pass(img, img_180):
     upsample = 200
     # Register the translation correction
-    print(img.shape)
-    print(img_180.shape)
+    # print(img.shape)
+    # print(img_180.shape)
     trans = register_translation(img, img_180, upsample_factor=upsample)
     trans = trans[0]
     # Register the rotation correction
