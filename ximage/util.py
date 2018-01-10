@@ -92,6 +92,10 @@ def load_raw(top, index_start):
     template = os.listdir(top)[1]
 
     nfile = len(fnmatch.filter(os.listdir(top), '*.tif'))
+
+    if (nfile == 0):
+        nfile = len(fnmatch.filter(os.listdir(top), '*.tiff'))
+
     index_end = index_start + nfile
     ind_tomo = range(index_start, index_end)
 
